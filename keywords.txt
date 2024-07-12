@@ -1,0 +1,2 @@
+PlcNano KEYWORD1
+getHwIo KEYWORD2
