@@ -1,19 +1,19 @@
 #include "PlcNano.h"
 #include <Wire.h>
-#include <Adafruit_PCF8574.h>
 
-bool PlcNano::begin(void)
+bool PlcNano::bBegin(void)
 {
-    bool bRet = pcf.begin(0x20, &Wire);
+    bool bRet = m_pcf.begin(0x20, &Wire);
+    bRet = bRet && PlcNanoDigitalOut::begin(&m_pcf);
 
     for (uint8_t p = 0; p < 4; p++)
     {
-        pcf.pinMode(p, OUTPUT);     // set lower niblle to OUTPUT
+        m_pcf.pinMode(p, OUTPUT);     // set lower niblle to OUTPUT
     }
 
     for (uint8_t p = 4; p < 8; p++)
     {
-        pcf.pinMode(p, INPUT_PULLUP);   // set high nibble to INPUT with PULLUP
+        m_pcf.pinMode(p, INPUT_PULLUP);   // set high nibble to INPUT with PULLUP
     }
 
     return bRet;

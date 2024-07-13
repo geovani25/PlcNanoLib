@@ -1,2 +1,6 @@
 PlcNano KEYWORD1
-getHwIo KEYWORD2
+getPin KEYWORD2
+begin KEYWORD2
+set KEYWORD2
+reset KEYWORD2
+toggle KEYWORD2

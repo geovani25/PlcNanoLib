@@ -1,7 +1,6 @@
 #include "PlcNanoDigitalOut.hpp"
-#include <Adafruit_PCF8574.h>
 
-PlcNanoDigitalOut::PlcNanoDigitalOut()
+PlcNanoDigitalOut::PlcNanoDigitalOut(uint8_t const pin) : m_pin(pin)
 {
 }
 
@@ -9,17 +8,30 @@ PlcNanoDigitalOut::~PlcNanoDigitalOut()
 {
 }
 
-bool PlcNanoDigitalOut::begin(void)
+Adafruit_PCF8574 const * PlcNanoDigitalOut::pPcf = nullptr;
+
+bool PlcNanoDigitalOut::begin(Adafruit_PCF8574 const * const pcf)
 {
+    if (pcf != nullptr)
+    {
+        pPcf = pcf;
+        return true;
+    }
+    return false;
 }
 
 void PlcNanoDigitalOut::set(void)
 {
-    pcf.digitalWrite(m_pin, HIGH);
+    pPcf->digitalWrite(m_pin, HIGH);
 }
 
 void PlcNanoDigitalOut::reset(void)
 {
-    pcf.digitalWrite(m_pin, LOW);
+    pPcf->digitalWrite(m_pin, LOW);
+}
+
+void PlcNanoDigitalOut::toggle(void)
+{
+    pPcf->digitalWrite(m_pin, !pPcf->digitalRead(m_pin));
 }
 
